@@ -1,9 +1,6 @@
 package com.feather.manage.api;
 
 import com.feather.bz.common.core.JsonResult;
-import com.feather.bz.common.enums.ErrorCodeEnum;
-import com.feather.bz.common.exception.BaseBizException;
-import com.feather.bz.common.exception.CommonErrorCodeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
