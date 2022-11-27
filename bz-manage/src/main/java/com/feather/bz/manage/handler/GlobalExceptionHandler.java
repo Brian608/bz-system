@@ -1,4 +1,4 @@
-package com.feather.manage.handler;
+package com.feather.bz.manage.handler;
 
 import com.feather.bz.common.core.JsonResult;
 import com.feather.bz.common.exception.BaseBizException;

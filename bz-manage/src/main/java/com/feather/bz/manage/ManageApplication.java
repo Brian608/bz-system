@@ -1,4 +1,4 @@
-package com.feather.manage;
+package com.feather.bz.manage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

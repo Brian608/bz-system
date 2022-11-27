@@ -1,4 +1,4 @@
-package com.feather.manage.config;
+package com.feather.bz.manage.config;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

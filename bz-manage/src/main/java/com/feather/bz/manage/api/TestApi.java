@@ -1,10 +1,12 @@
-package com.feather.manage.api;
+package com.feather.bz.manage.api;
 
 import com.feather.bz.common.core.JsonResult;
+import com.feather.bz.manage.annoation.Log;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,10 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestApi {
 
 
+    @Log(description = "测试接口")
     @ApiOperation(value = "测试接口", notes = "测试接口", httpMethod = "GET")
     @GetMapping("/hello")
-    public JsonResult<String> test(){
-       return  JsonResult.buildSuccess();
+    public JsonResult<String> test(@RequestParam (name = "id")String id){
+       return  JsonResult.buildSuccess(id);
 
     }
 }
