@@ -1,5 +1,6 @@
 package com.feather.bz.common.core;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 
 import java.util.List;
@@ -45,12 +46,12 @@ public class PagingInfo<T>  {
         this.list = list;
     }
 
-    public static <T> PagingInfo toResponse(List<T> data,Long total,Integer currentPageNo,Integer currentPageSize){
+    public static <T> PagingInfo toResponse(Page<T> pageResult){
         PagingInfo<T> pagingObj = new PagingInfo<>();
-        pagingObj.setTotal(total);
-        pagingObj.setList(data);
-        pagingObj.setPageNo(currentPageNo);
-        pagingObj.setPageSize(currentPageSize);
+        pagingObj.setTotal(pageResult.getTotal());
+        pagingObj.setList(pageResult.getRecords());
+        pagingObj.setPageNo((int)pageResult.getCurrent());
+        pagingObj.setPageSize((int)pageResult.getSize());
         return pagingObj;
     }
 }

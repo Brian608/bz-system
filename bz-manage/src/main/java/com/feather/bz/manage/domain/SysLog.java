@@ -53,9 +53,4 @@ public class SysLog extends Model<SysLog> {
     private Date createTime;
 
 
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
 }
