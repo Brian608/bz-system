@@ -29,7 +29,7 @@ public class SysUserController {
 
     private  final ISysUserService sysUserService;
 
-   // @Log(description = "注册用户")
+    @Log(description = "注册用户")
     @ApiOperation(value = "注册用户",httpMethod = "POST", produces = "application/json")
     @PostMapping("/registerUser")
     public JsonResult<SysUser> registerUser(@RequestBody  @Validated  AddUserBO addUserBO) {

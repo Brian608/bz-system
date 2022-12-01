@@ -33,16 +33,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 throw  new UserBizException(UserErrorCodeEnum.USER_COUPON_IS_NULL);
         }
         SysUser sysUser=new SysUser();
-        BeanUtils.copyProperties(addUserBO,sysUser);
-        if (Objects.isNull(addUserBO.getBirthday())){
-            sysUser.setBirthday(new Date());
-        }
-        try {
-            sysUser.setPassword(MD5Utils.getMD5Str(addUserBO.getPassword()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.save(sysUser);
+//        BeanUtils.copyProperties(addUserBO,sysUser);
+//        if (Objects.isNull(addUserBO.getBirthday())){
+//            sysUser.setBirthday(new Date());
+//        }
+//        try {
+//            sysUser.setPassword(MD5Utils.getMD5Str(addUserBO.getPassword()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        this.save(sysUser);
         return sysUser;
 
     }

@@ -1,5 +1,6 @@
 package com.feather.bz.manage.aspect;
 
+import com.feather.bz.common.exception.BaseBizException;
 import com.feather.bz.common.utils.HttpContextUtils;
 import com.feather.bz.common.utils.IpUtil;
 import com.feather.bz.manage.annoation.Log;
@@ -44,7 +45,10 @@ public class LogAspect {
             // 执行方法
             point.proceed();
         } catch (Throwable e) {
-            e.printStackTrace();
+           if (( e instanceof BaseBizException)){
+               throw  new BaseBizException(((BaseBizException) e).getErrorCode(), ((BaseBizException) e).getErrorMsg());
+           }
+
         }
         // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
