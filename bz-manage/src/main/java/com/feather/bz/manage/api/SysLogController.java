@@ -6,6 +6,7 @@ import com.feather.bz.common.core.PagingInfo;
 import com.feather.bz.manage.domain.SysLog;
 import com.feather.bz.manage.domain.dto.LogQueryDTO;
 import com.feather.bz.manage.service.ISysLogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @author feather
  * @since 2022-11-27
  */
+@Api(value = "日志模块", tags = {"日志模块"})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 @RequestMapping("/sys-log")
