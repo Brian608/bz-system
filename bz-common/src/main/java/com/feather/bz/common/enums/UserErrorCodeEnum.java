@@ -12,7 +12,10 @@ import com.feather.bz.common.exception.BaseErrorCodeEnum;
  * @version: 1.0
  */
 public enum UserErrorCodeEnum  implements BaseErrorCodeEnum {
-    USER_COUPON_IS_NULL("300001", "密码跟确认密码不一致");
+    USER_COUPON_IS_NULL("300001", "密码跟确认密码不一致"),
+
+    USER_EXIST("300002","用户已经存在"),
+    ;
     private String errorCode;
 
     private String errorMsg;
