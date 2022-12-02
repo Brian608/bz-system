@@ -6,11 +6,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.feather.bz.common.constants.CoreConstant;
 import com.feather.bz.common.constants.RedisConstants;
 import com.feather.bz.common.domain.dto.UserTokenDTO;
+import com.feather.bz.common.enums.UserErrorCodeEnum;
+import com.feather.bz.common.exception.UserBizException;
 import lombok.extern.slf4j.Slf4j;
-import sun.plugin.dom.core.CoreConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,12 +58,18 @@ public class JWTUtil {
      * @param token
      * @return
      */
-    public static UserTokenDTO parseToken(String token) {
-        Algorithm algorithm = Algorithm.HMAC256(RedisConstants.TOKEN_SECRET);
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT jwt = verifier.verify(token);
-        String tokenInfo = jwt.getClaim("token").asString();
-        return JSON.parseObject(tokenInfo, UserTokenDTO.class);
+    public static UserTokenDTO verifyToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(RedisConstants.TOKEN_SECRET);
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT jwt = verifier.verify(token);
+            String tokenInfo = jwt.getClaim("token").asString();
+            return JSON.parseObject(tokenInfo, UserTokenDTO.class);
+        }catch (Exception e) {
+            throw new UserBizException(UserErrorCodeEnum.TOKEN_EXPIRE_ERROR);
+        }
+
+
     }
 
 }

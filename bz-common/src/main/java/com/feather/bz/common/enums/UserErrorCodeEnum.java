@@ -24,6 +24,8 @@ public enum UserErrorCodeEnum  implements BaseErrorCodeEnum {
 
     TOKEN_EXPIRE_ERROR("300005","无效token，请重新登录"),
 
+    ILLEGAL_USER("300006","非法用户"),
+
     ;
     private String errorCode;
 

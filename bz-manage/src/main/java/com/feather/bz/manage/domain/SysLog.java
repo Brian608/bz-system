@@ -50,7 +50,7 @@ public class SysLog extends Model<SysLog> {
     private String contentType;
 
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private Date createdTime;
 
 
 }

@@ -13,7 +13,7 @@
         <result column="params" property="params" />
         <result column="ip" property="ip" />
         <result column="content_type" property="contentType" />
-        <result column="create_time" property="createTime" />
+        <result column="created_time" property="createdTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

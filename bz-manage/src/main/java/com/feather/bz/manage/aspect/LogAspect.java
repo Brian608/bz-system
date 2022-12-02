@@ -1,11 +1,13 @@
 package com.feather.bz.manage.aspect;
 
+import com.feather.bz.common.domain.dto.UserTokenDTO;
 import com.feather.bz.common.exception.BaseBizException;
 import com.feather.bz.common.utils.HttpContextUtils;
 import com.feather.bz.common.utils.IpUtil;
 import com.feather.bz.manage.annoation.Log;
 import com.feather.bz.manage.domain.SysLog;
 import com.feather.bz.manage.service.ISysLogService;
+import com.feather.bz.manage.support.UserSupport;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 /**
  * @author feather
@@ -33,6 +34,8 @@ public class LogAspect {
 
 
     private  final ISysLogService sysLogService;
+
+    private  final UserSupport userSupport;
 
     @Pointcut("@annotation(com.feather.bz.manage.annoation.Log)")
     public void pointcut() {
@@ -91,9 +94,8 @@ public class LogAspect {
         // 设置IP地址
         sysLog.setIp(IpUtil.getIpAddr(request));
         sysLog.setContentType(request.getContentType());
-            //TODO 通过上下文获取用户名
-        sysLog.setUser("duxuesong");
-        sysLog.setCreateTime(new Date());
+        UserTokenDTO currentUserInfo = userSupport.getCurrentUserInfo();
+        sysLog.setUser(currentUserInfo.getUsername());
         // 保存系统日志
         sysLogService.save(sysLog);
     }

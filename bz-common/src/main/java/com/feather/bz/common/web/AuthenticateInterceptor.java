@@ -39,7 +39,7 @@ public class AuthenticateInterceptor implements HandlerInterceptor {
             throw  new UserBizException(UserErrorCodeEnum.TOKEN_EXPIRE_ERROR);
         }
        // String token = authToken.substring("Bearer".length() + 1).trim();
-        UserTokenDTO userTokenDTO = JWTUtil.parseToken(authToken);
+        UserTokenDTO userTokenDTO = JWTUtil.verifyToken(authToken);
         //1.判断请求是否有效
         if (redisService.get(RedisConstants.USER+userTokenDTO.getUsername()) == null
                 || !redisService.get(RedisConstants.USER+userTokenDTO.getUsername()).equals(authToken)) {
