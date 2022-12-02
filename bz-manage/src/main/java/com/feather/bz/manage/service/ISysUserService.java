@@ -3,6 +3,8 @@ package com.feather.bz.manage.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.domain.bo.AddUserBO;
+import com.feather.bz.manage.domain.dto.LoginDTO;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
  * <p>
@@ -20,5 +22,19 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     SysUser registerUser(AddUserBO addUserBO );
+
+    /**
+     * 登录
+     * @param loginDTO
+     * @return
+     */
+    String login (LoginDTO loginDTO);
+
+    /**
+     * 用户名
+     * @param userName
+     * @return
+     */
+    Boolean logOut(String userName);
 
 }

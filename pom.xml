@@ -123,6 +123,18 @@
                 <artifactId>commons-codec</artifactId>
                 <version>1.11</version>
             </dependency>
+        <!--jwt -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>3.10.3</version>
+            </dependency>
+            <!-- redis -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+            </dependency>
+
         </dependencies>
 
 

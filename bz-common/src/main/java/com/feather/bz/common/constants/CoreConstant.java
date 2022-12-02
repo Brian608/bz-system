@@ -30,4 +30,8 @@ public interface CoreConstant {
      */
     String TIME_FORMAT_PATTERN = "HH:mm:ss";
 
+    String API="api/";
+
+    String V1="v1";
+
 }

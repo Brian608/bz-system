@@ -1,6 +1,7 @@
 package com.feather.bz.manage.api;
 
 
+import com.feather.bz.common.constants.CoreConstant;
 import com.feather.bz.common.core.JsonResult;
 import com.feather.bz.common.core.PagingInfo;
 import com.feather.bz.manage.domain.SysLog;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "日志模块", tags = {"日志模块"})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-@RequestMapping("/sys-log")
+@RequestMapping(CoreConstant.API+CoreConstant.V1+"/sys-log")
 public class SysLogController {
 
     private final   ISysLogService sysLogService;

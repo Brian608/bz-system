@@ -15,6 +15,15 @@ public enum UserErrorCodeEnum  implements BaseErrorCodeEnum {
     USER_COUPON_IS_NULL("300001", "密码跟确认密码不一致"),
 
     USER_EXIST("300002","用户已经存在"),
+
+    USER_NOT_EXIST("300003","用户不存在"),
+
+    LOGINOUT_ERROR("300004","退出失败"),
+
+    PASSWORD_ERROR("300004","密码错误"),
+
+    TOKEN_EXPIRE_ERROR("300005","无效token，请重新登录"),
+
     ;
     private String errorCode;
 
