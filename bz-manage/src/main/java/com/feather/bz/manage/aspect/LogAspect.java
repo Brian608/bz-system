@@ -6,6 +6,7 @@ import com.feather.bz.common.utils.HttpContextUtils;
 import com.feather.bz.common.utils.IpUtil;
 import com.feather.bz.manage.annoation.Log;
 import com.feather.bz.manage.domain.SysLog;
+import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.service.ISysLogService;
 import com.feather.bz.manage.support.UserSupport;
 import lombok.RequiredArgsConstructor;
@@ -94,8 +95,8 @@ public class LogAspect {
         // 设置IP地址
         sysLog.setIp(IpUtil.getIpAddr(request));
         sysLog.setContentType(request.getContentType());
-        UserTokenDTO currentUserInfo = userSupport.getCurrentUserInfo();
-        sysLog.setUser(currentUserInfo.getUsername());
+       SysUser sysUser = userSupport.getCurrentUser();
+        sysLog.setUser(sysUser.getUsername());
         // 保存系统日志
         sysLogService.save(sysLog);
     }

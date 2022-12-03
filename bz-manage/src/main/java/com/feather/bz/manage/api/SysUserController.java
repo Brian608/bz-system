@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <p>
  * 用户表  前端控制器
@@ -43,8 +46,8 @@ public class SysUserController {
     @Log(description = "登录")
     @ApiOperation(value = "登录",httpMethod = "POST", produces = "application/json")
     @PostMapping("/login")
-    public JsonResult<String> login(@RequestBody  @Validated LoginDTO loginDTO) {
-        return JsonResult.buildSuccess(sysUserService.login(loginDTO));
+    public JsonResult<String> login(@RequestBody  @Validated LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
+        return JsonResult.buildSuccess(sysUserService.login(loginDTO,request,response));
     }
 
     @Log(description = "退出登录")

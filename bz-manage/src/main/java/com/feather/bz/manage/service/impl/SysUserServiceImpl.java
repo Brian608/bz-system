@@ -22,9 +22,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 /**
  * <p>
@@ -74,22 +75,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     }
 
+    public  SysUser getByUserName(String userName){
+        ParamCheckUtil.checkStringNonEmpty(userName);
+       return this.sysUserMapper.selectOne(new QueryWrapper<SysUser>().lambda().eq(SysUser::getUsername,userName));
+    }
+
     @Override
-    public String login(LoginDTO loginDTO) {
+    public String login(LoginDTO loginDTO , HttpServletRequest request, HttpServletResponse response) {
         ParamCheckUtil.checkObjectNonNull(loginDTO);
-        QueryWrapper<SysUser> queryWrapper=new QueryWrapper<>();
-        queryWrapper.lambda().eq(SysUser::getUsername,loginDTO.getUserName());
-        SysUser sysUser = this.sysUserMapper.selectOne(queryWrapper);
-        if (Objects.isNull(sysUser)){
+        SysUser byUserName = this.getByUserName(loginDTO.getUserName());
+        if (Objects.isNull(byUserName)){
             throw  new UserBizException(UserErrorCodeEnum.USER_NOT_EXIST);
         }
-        if (!sysUser.getPassword().equals(loginDTO.getPassword())){
+        if (!byUserName.getPassword().equals(loginDTO.getPassword())){
             throw  new UserBizException(UserErrorCodeEnum.PASSWORD_ERROR);
         }
         UserTokenDTO userTokenDTO=new UserTokenDTO();
-        BeanUtils.copyProperties(sysUser,userTokenDTO);
+        BeanUtils.copyProperties(byUserName,userTokenDTO);
         String token = JWTUtil.generateToken(userTokenDTO);
-        redisService.set(RedisConstants.USER+sysUser.getUsername(), token);
+        redisService.set(RedisConstants.USER+byUserName.getUsername(), token);
+        HttpSession session = request.getSession(true);
+        session.setMaxInactiveInterval(RedisConstants.DURATION);
+        session.setAttribute("User",byUserName);
         return token;
     }
 

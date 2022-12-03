@@ -6,6 +6,10 @@ import com.feather.bz.manage.domain.bo.AddUserBO;
 import com.feather.bz.manage.domain.dto.LoginDTO;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
 /**
  * <p>
  * 用户表  服务类
@@ -28,7 +32,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param loginDTO
      * @return
      */
-    String login (LoginDTO loginDTO);
+    String login (LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 用户名

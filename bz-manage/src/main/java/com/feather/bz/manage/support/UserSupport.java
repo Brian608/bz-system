@@ -1,11 +1,19 @@
 package com.feather.bz.manage.support;
 
 import com.feather.bz.common.domain.dto.UserTokenDTO;
+import com.feather.bz.common.enums.UserErrorCodeEnum;
+import com.feather.bz.common.exception.UserBizException;
+import com.feather.bz.common.utils.HttpContextUtils;
 import com.feather.bz.common.utils.JWTUtil;
+import com.feather.bz.manage.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 /**
  * @projectName: bz-system
@@ -27,6 +35,17 @@ public class UserSupport {
         String token = requestAttributes.getRequest().getHeader("token");
         return JWTUtil.verifyToken(token);
     }
+
+    public SysUser getCurrentUser(){
+        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute("User");
+        if (Objects.isNull(user)){
+            throw  new UserBizException(UserErrorCodeEnum.TOKEN_EXPIRE_ERROR);
+        }
+        return (SysUser) user;
+    }
+
 
 
 }

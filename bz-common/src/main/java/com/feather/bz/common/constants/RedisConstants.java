@@ -19,7 +19,7 @@ public interface RedisConstants {
     /**
      * 过期时长
      */
-    Long DURATION = 1 * 24 * 60 * 60 * 1000L;
+    int DURATION = 1 * 24 * 60 * 60 * 1000;
 
     String USER="USER:";
 
