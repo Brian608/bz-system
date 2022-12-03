@@ -52,6 +52,7 @@ public class LogAspect {
            if (( e instanceof BaseBizException)){
                throw  new BaseBizException(((BaseBizException) e).getErrorCode(), ((BaseBizException) e).getErrorMsg());
            }
+           e.printStackTrace();
 
         }
         // 执行时长(毫秒)
