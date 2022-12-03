@@ -1,6 +1,5 @@
 package com.feather.bz.manage.aspect;
 
-import com.feather.bz.common.domain.dto.UserTokenDTO;
 import com.feather.bz.common.exception.BaseBizException;
 import com.feather.bz.common.utils.HttpContextUtils;
 import com.feather.bz.common.utils.IpUtil;
@@ -10,6 +9,7 @@ import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.service.ISysLogService;
 import com.feather.bz.manage.support.UserSupport;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,6 +29,7 @@ import java.lang.reflect.Method;
  * @since 18-Jul-22 4:07 PM
  */
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Slf4j
 @Aspect
 @Component
 public class LogAspect {
@@ -52,7 +53,7 @@ public class LogAspect {
            if (( e instanceof BaseBizException)){
                throw  new BaseBizException(((BaseBizException) e).getErrorCode(), ((BaseBizException) e).getErrorMsg());
            }
-           e.printStackTrace();
+          log.error("[切面执行方法异常:{}]",e.getMessage());
 
         }
         // 执行时长(毫秒)
@@ -81,11 +82,11 @@ public class LogAspect {
         LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
         String[] paramNames = u.getParameterNames(method);
         if (args != null && paramNames != null) {
-            String params = "";
+            StringBuilder params = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
-                params += "  " + paramNames[i] + ": " + args[i];
+                params.append(" ").append(paramNames[i] ).append(":").append(args[i]);
             }
-            sysLog.setParams(params);
+            sysLog.setParams(params.toString());
         }
         // 获取request
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
