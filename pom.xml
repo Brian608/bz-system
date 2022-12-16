@@ -116,7 +116,28 @@
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>1.7.21</version>
             </dependency>
-
+            <!-- cglib的BeanCopier需要的依赖 start -->
+            <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm-commons</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>asm</groupId>
+                <artifactId>asm-util</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+            <!-- end -->
             <!-- apache 工具类 -->
             <dependency>
                 <groupId>commons-codec</groupId>
