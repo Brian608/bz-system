@@ -53,8 +53,8 @@ public class SysUserController {
     @Log(description = "退出登录")
     @ApiOperation(value = "退出登录",httpMethod = "POST", produces = "application/json")
     @PostMapping("/logOut")
-    public JsonResult<Boolean> logOut(@ApiParam(name = "userName",value = "用户名",required = true) @RequestParam String userName) {
-        return JsonResult.buildSuccess(sysUserService.logOut(userName));
+    public JsonResult<Boolean> logOut(@ApiParam(name = "userName",value = "用户名",required = true) @RequestParam String userName, HttpServletRequest request, HttpServletResponse response) {
+        return JsonResult.buildSuccess(sysUserService.logOut(userName,request,response));
     }
 
 }

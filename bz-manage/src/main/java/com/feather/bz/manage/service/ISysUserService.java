@@ -39,6 +39,6 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userName
      * @return
      */
-    Boolean logOut(String userName);
+    Boolean logOut(String userName, HttpServletRequest request, HttpServletResponse response);
 
 }

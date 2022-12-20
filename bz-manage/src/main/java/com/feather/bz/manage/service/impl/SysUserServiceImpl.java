@@ -8,9 +8,7 @@ import com.feather.bz.common.domain.dto.UserTokenDTO;
 import com.feather.bz.common.enums.UserErrorCodeEnum;
 import com.feather.bz.common.exception.UserBizException;
 import com.feather.bz.common.service.RedisService;
-import com.feather.bz.common.utils.JWTUtil;
-import com.feather.bz.common.utils.MD5Utils;
-import com.feather.bz.common.utils.ParamCheckUtil;
+import com.feather.bz.common.utils.*;
 import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.domain.bo.AddUserBO;
 import com.feather.bz.manage.domain.dto.LoginDTO;
@@ -24,8 +22,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -94,19 +93,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanUtils.copyProperties(byUserName,userTokenDTO);
         String token = JWTUtil.generateToken(userTokenDTO);
         redisService.set(RedisConstants.USER+byUserName.getUsername(), token);
-        HttpSession session = request.getSession(true);
-        session.setMaxInactiveInterval(RedisConstants.DURATION);
-        session.setAttribute("User",byUserName);
+        CookieUtils.setCookie(request,response,"user", JsonUtil.object2Json(userTokenDTO),true);
+//        HttpSession session = request.getSession(true);
+//        session.setMaxInactiveInterval(RedisConstants.DURATION);
+//        session.setAttribute("User",byUserName);
         return token;
     }
 
     @Override
-    public Boolean logOut(String userName) {
+    public Boolean logOut(String userName, HttpServletRequest request, HttpServletResponse response) {
         boolean result = redisService.delete(RedisConstants.USER+userName);
         if (!result) {
             throw new UserBizException(UserErrorCodeEnum.LOGINOUT_ERROR);
         }
-
+        CookieUtils.deleteCookie(request ,response,"user");
         return true;
     }
 }
