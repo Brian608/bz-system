@@ -34,6 +34,5 @@ public class SysLogController {
     public JsonResult<PagingInfo<SysLog>> logPage(@RequestBody LogQueryDTO query) {
         return JsonResult.buildSuccess(sysLogService.logPage(query));
     }
-
 }
 

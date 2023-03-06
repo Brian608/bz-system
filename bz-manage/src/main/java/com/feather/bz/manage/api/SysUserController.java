@@ -43,7 +43,7 @@ public class SysUserController {
     }
 
 
-    @Log(description = "登录")
+   // @Log(description = "登录")
     @ApiOperation(value = "登录",httpMethod = "POST", produces = "application/json")
     @PostMapping("/login")
     public JsonResult<String> login(@RequestBody  @Validated LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
