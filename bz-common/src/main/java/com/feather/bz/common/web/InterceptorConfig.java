@@ -17,20 +17,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        String[] allow = {"/api/v1/sys-user/login","/api/v1/file-preview/preview/","/swagger-ui/","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"};
-//        registry.addInterceptor( authorityInterceptor())
-//                .addPathPatterns("/"+ CoreConstant.API+"/"+CoreConstant.V1+"/**")
-//                .excludePathPatterns(allow);
-//        WebMvcConfigurer.super.addInterceptors(registry);
-//    }
-//
-//
-//    @Bean
-//    public AuthenticateInterceptor authorityInterceptor() {
-//        return new AuthenticateInterceptor();
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        String[] allow = {"/api/v1/sys-user/login","/api/v1/file-preview/preview/","/swagger-ui/","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"};
+        registry.addInterceptor( authorityInterceptor())
+                .addPathPatterns("/"+ CoreConstant.API+"/"+CoreConstant.V1+"/**")
+                .excludePathPatterns(allow);
+        WebMvcConfigurer.super.addInterceptors(registry);
+    }
+
+
+    @Bean
+    public AuthenticateInterceptor authorityInterceptor() {
+        return new AuthenticateInterceptor();
+    }
 
 
 }

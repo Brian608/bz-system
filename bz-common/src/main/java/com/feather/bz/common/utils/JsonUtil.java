@@ -38,7 +38,7 @@ public class JsonUtil {
         try {
             s = objectMapper.writeValueAsString(o);
         } catch (Exception e) {
-            log.warn("object to com.ruyuan.eshop.common.json error", e);
+            log.warn("object to com.feather.bz.common.json error", e);
         }
         return s;
     }
@@ -100,7 +100,7 @@ public class JsonUtil {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (Exception e) {
-            log.warn("com.ruyuan.eshop.common.json to object error", e);
+            log.warn("com.feather.bz.common.json to object error", e);
         }
         return null;
     }
@@ -120,7 +120,7 @@ public class JsonUtil {
         try {
             return objectMapper.readValue(json, typeReference);
         } catch (Exception e) {
-            log.warn("com.ruyuan.eshop.common.json to object error", e);
+            log.warn("com.feather.bz.common.json to object error", e);
         }
         return null;
     }
@@ -142,7 +142,7 @@ public class JsonUtil {
             String jsonStr = objectMapper.writeValueAsString(data);
             return objectMapper.readValue(jsonStr, clazz);
         } catch (JsonProcessingException e) {
-            log.warn("com.ruyuan.eshop.common.json data process error", e);
+            log.warn("com.feather.bz.common.json data process error", e);
         }
         return null;
     }
@@ -164,7 +164,7 @@ public class JsonUtil {
             String jsonStr = objectMapper.writeValueAsString(data);
             return objectMapper.readValue(jsonStr, typeReference);
         } catch (JsonProcessingException e) {
-            log.warn("com.ruyuan.eshop.common.json data process error", e);
+            log.warn("com.feather.bz.common.json data process error", e);
         }
         return null;
     }
