@@ -16,3 +16,5 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  file-path: D:\\dev\\logs\\bz\\bz.log
