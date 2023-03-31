@@ -1,6 +1,7 @@
 package com.feather.bz.manage.api;
 
 import com.feather.bz.common.core.JsonResult;
+import com.feather.bz.manage.annoation.Log;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestApi {
 
 
-   // @Log(description = "测试接口")
+    @Log(description = "测试接口")
     @ApiOperation(value = "测试接口", notes = "测试接口", httpMethod = "POST")
     @PostMapping("/hello")
     public JsonResult<java.lang.String> hello(@RequestParam (name = "id")String id){

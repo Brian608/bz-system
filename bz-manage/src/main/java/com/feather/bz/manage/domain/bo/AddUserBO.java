@@ -31,12 +31,12 @@ public class AddUserBO {
 
 
     @NotNull(message = "密码不能为空")
-    @ApiModelProperty(value = "密码",name ="password",example = "123456",required = true)
+    @ApiModelProperty(value = "密码 md5后再base64",name ="password",required = true)
     private String password;
 
-    @NotNull(message = "确认密码不能为空")
-    @ApiModelProperty(value = "确认密码",name ="confirmPassWord",example = "123456",required = true)
-    private String confirmPassWord;
+//    @NotNull(message = "确认密码不能为空")
+//    @ApiModelProperty(value = "确认密码",name ="confirmPassWord",example = "123456",required = true)
+//    private String confirmPassWord;
 
     /**
      * 真实姓名

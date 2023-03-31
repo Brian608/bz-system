@@ -26,5 +26,9 @@ public class MD5Utils {
         return Base64.encodeBase64String(md5.digest(strValue.getBytes()));
     }
 
+    public static void main(String[] args) throws Exception {
+        System.out.println(getMD5Str("12345654321"));
+    }
+
 
 }

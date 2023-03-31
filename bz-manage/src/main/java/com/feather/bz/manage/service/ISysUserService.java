@@ -7,6 +7,7 @@ import com.feather.bz.manage.domain.dto.LoginDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,14 +24,14 @@ public interface ISysUserService extends IService<SysUser> {
      * @param addUserBO
      * @return
      */
-    SysUser registerUser(AddUserBO addUserBO );
+    Boolean registerUser(AddUserBO addUserBO );
 
     /**
      * 登录
      * @param loginDTO
      * @return
      */
-    String login (LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response);
+    Map<String,String> login (LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
     /**
      * 用户名

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * @author feather
@@ -98,7 +99,9 @@ public class LogAspect {
         sysLog.setIp(IpUtil.getIpAddr(request));
         sysLog.setContentType(request.getContentType());
        SysUser sysUser = userSupport.getCurrentUser();
-        sysLog.setUser(sysUser.getUsername());
+       if (!Objects.isNull(sysUser)){
+           sysLog.setUser(sysUser.getUsername());
+       }
         // 保存系统日志
         sysLogService.save(sysLog);
     }

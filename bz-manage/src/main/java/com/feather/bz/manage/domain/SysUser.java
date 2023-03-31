@@ -43,6 +43,8 @@ public class SysUser extends Model<SysUser> {
      */
     private String password;
 
+    private String salt;
+
 
     /**
      * 真实姓名

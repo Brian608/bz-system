@@ -1,5 +1,6 @@
 package com.feather.bz.manage.support;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.feather.bz.common.domain.dto.UserTokenDTO;
 import com.feather.bz.common.enums.UserErrorCodeEnum;
 import com.feather.bz.common.exception.UserBizException;
@@ -37,13 +38,16 @@ public class UserSupport {
     }
 
     public SysUser getCurrentUser(){
-        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-        HttpSession session = request.getSession();
-        Object user = session.getAttribute("User");
-        if (Objects.isNull(user)){
-            throw  new UserBizException(UserErrorCodeEnum.TOKEN_EXPIRE_ERROR);
+        if (StpUtil.isLogin()){
+            HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+            HttpSession session = request.getSession();
+            Object user = session.getAttribute("User");
+            if (Objects.isNull(user)){
+                throw  new UserBizException(UserErrorCodeEnum.TOKEN_EXPIRE_ERROR);
+            }
+            return (SysUser) user;
         }
-        return (SysUser) user;
+        return  null;
     }
 
 

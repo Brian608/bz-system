@@ -1,5 +1,6 @@
 package com.feather.bz.manage.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,9 +23,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 /**
  * <p>
@@ -44,24 +44,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private  final RedisService redisService;
 
     @Override
-    public SysUser registerUser(AddUserBO addUserBO ) {
+    public Boolean registerUser(AddUserBO addUserBO ) {
         ParamCheckUtil.checkObjectNonNull(addUserBO);
         this.checkUserExist(addUserBO);
-        if (!addUserBO.getPassword().equals(addUserBO.getConfirmPassWord())){
-                throw  new UserBizException(UserErrorCodeEnum.USER_COUPON_IS_NULL);
-        }
         SysUser sysUser=new SysUser();
+        String salt = RandomUtil.genRandomNumberStr(8);
+        sysUser.setSalt(salt);
         BeanUtils.copyProperties(addUserBO,sysUser);
         if (Objects.isNull(addUserBO.getBirthday())){
             sysUser.setBirthday(new Date());
         }
         try {
-            sysUser.setPassword(MD5Utils.getMD5Str(addUserBO.getPassword()));
+            sysUser.setPassword(MD5Utils.getMD5Str(addUserBO.getPassword().concat(salt)));
         } catch (Exception e) {
             e.printStackTrace();
+            throw  new UserBizException("加密异常");
         }
-        this.save(sysUser);
-        return sysUser;
+      return   this.save(sysUser);
     }
     public  void  checkUserExist(AddUserBO addUserBO){
         QueryWrapper<SysUser> queryWrapper=new QueryWrapper<>();
@@ -80,32 +79,37 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public String login(LoginDTO loginDTO , HttpServletRequest request, HttpServletResponse response) {
+    public Map<String, String> login(LoginDTO loginDTO , HttpServletRequest request, HttpServletResponse response) throws Exception {
         ParamCheckUtil.checkObjectNonNull(loginDTO);
         SysUser byUserName = this.getByUserName(loginDTO.getUserName());
         if (Objects.isNull(byUserName)){
             throw  new UserBizException(UserErrorCodeEnum.USER_NOT_EXIST);
         }
-        if (!byUserName.getPassword().equals(loginDTO.getPassword())){
+        if (!MD5Utils.getMD5Str(loginDTO.getPassword().concat(byUserName.getSalt())).equals(byUserName.getPassword())){
             throw  new UserBizException(UserErrorCodeEnum.PASSWORD_ERROR);
         }
         UserTokenDTO userTokenDTO=new UserTokenDTO();
         BeanUtils.copyProperties(byUserName,userTokenDTO);
-        String token = JWTUtil.generateToken(userTokenDTO);
-        redisService.set(RedisConstants.USER+byUserName.getUsername(), token);
+        StpUtil.login(loginDTO.getUserName());
+        String token =  StpUtil.getTokenValue();
+//        String token = JWTUtil.generateToken(userTokenDTO);
+//        redisService.set(RedisConstants.USER+byUserName.getUsername(), token);
         CookieUtils.setCookie(request,response,"user", JsonUtil.object2Json(userTokenDTO),true);
-//        HttpSession session = request.getSession(true);
-//        session.setMaxInactiveInterval(RedisConstants.DURATION);
-//        session.setAttribute("User",byUserName);
-        return token;
+        HttpSession session = request.getSession(true);
+        session.setMaxInactiveInterval(RedisConstants.DURATION);
+        session.setAttribute("User",byUserName);
+        Map<String, String> resultMap=new HashMap<>();
+        resultMap.put("token",token);
+        return resultMap;
     }
 
     @Override
     public Boolean logOut(String userName, HttpServletRequest request, HttpServletResponse response) {
-        boolean result = redisService.delete(RedisConstants.USER+userName);
-        if (!result) {
-            throw new UserBizException(UserErrorCodeEnum.LOGINOUT_ERROR);
-        }
+//        boolean result = redisService.delete(RedisConstants.USER+userName);
+//        if (!result) {
+//            throw new UserBizException(UserErrorCodeEnum.LOGINOUT_ERROR);
+//        }
+        StpUtil.logoutByTokenValue(StpUtil.getTokenValue());
         CookieUtils.deleteCookie(request ,response,"user");
         return true;
     }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * <p>
@@ -35,10 +36,10 @@ public class SysUserController {
 
     private  final ISysUserService sysUserService;
 
-    @Log(description = "注册用户")
+   // @Log(description = "注册用户")
     @ApiOperation(value = "注册用户",httpMethod = "POST", produces = "application/json")
     @PostMapping("/registerUser")
-    public JsonResult<SysUser> registerUser(@RequestBody  @Validated  AddUserBO addUserBO) {
+    public JsonResult<Boolean> registerUser(@RequestBody  @Validated  AddUserBO addUserBO) {
         return JsonResult.buildSuccess(sysUserService.registerUser(addUserBO));
     }
 
@@ -46,7 +47,7 @@ public class SysUserController {
    // @Log(description = "登录")
     @ApiOperation(value = "登录",httpMethod = "POST", produces = "application/json")
     @PostMapping("/login")
-    public JsonResult<String> login(@RequestBody  @Validated LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResult<Map<String, String>> login(@RequestBody  @Validated LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return JsonResult.buildSuccess(sysUserService.login(loginDTO,request,response));
     }
 
