@@ -59,6 +59,7 @@ public class SysUserController {
         BufferedImage captchaImage = CaptchaGenerator.generateCaptchaImage(captchaText);
         HttpSession session=request.getSession(true);
         session.setAttribute(CoreConstant.VERIFY_CODE,captchaText);
+        session.setMaxInactiveInterval(2);
         // 将验证码图片写入响应
         response.setContentType("image/png");
         ImageIO.write(captchaImage, "png", response.getOutputStream());

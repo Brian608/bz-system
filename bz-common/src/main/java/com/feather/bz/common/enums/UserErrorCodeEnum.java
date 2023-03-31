@@ -26,7 +26,7 @@ public enum UserErrorCodeEnum  implements BaseErrorCodeEnum {
 
     ILLEGAL_USER("300006","非法用户"),
 
-    VERIFY_CODE_ERROR("300007","图形验证码错误"),
+    VERIFY_CODE_ERROR("300007","图形验证码错误或过期"),
 
     ;
     private String errorCode;
