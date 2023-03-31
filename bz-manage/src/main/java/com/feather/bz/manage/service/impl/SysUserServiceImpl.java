@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.feather.bz.common.constants.CoreConstant;
 import com.feather.bz.common.constants.RedisConstants;
 import com.feather.bz.common.domain.dto.UserTokenDTO;
 import com.feather.bz.common.enums.UserErrorCodeEnum;
@@ -85,6 +86,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (Objects.isNull(byUserName)){
             throw  new UserBizException(UserErrorCodeEnum.USER_NOT_EXIST);
         }
+        HttpSession session = request.getSession(true);
+        Object verifyCode = session.getAttribute(CoreConstant.VERIFY_CODE);
+        session.removeAttribute(CoreConstant.VERIFY_CODE);
+        if (Objects.isNull(verifyCode)||!loginDTO.getVerifyCode().equalsIgnoreCase((String) verifyCode )){
+            throw  new UserBizException(UserErrorCodeEnum.VERIFY_CODE_ERROR);
+        }
         if (!MD5Utils.getMD5Str(loginDTO.getPassword().concat(byUserName.getSalt())).equals(byUserName.getPassword())){
             throw  new UserBizException(UserErrorCodeEnum.PASSWORD_ERROR);
         }
@@ -95,7 +102,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        String token = JWTUtil.generateToken(userTokenDTO);
 //        redisService.set(RedisConstants.USER+byUserName.getUsername(), token);
         CookieUtils.setCookie(request,response,"user", JsonUtil.object2Json(userTokenDTO),true);
-        HttpSession session = request.getSession(true);
         session.setMaxInactiveInterval(RedisConstants.DURATION);
         session.setAttribute("User",byUserName);
         Map<String, String> resultMap=new HashMap<>();

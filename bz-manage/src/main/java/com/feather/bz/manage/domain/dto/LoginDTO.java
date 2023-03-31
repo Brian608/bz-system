@@ -22,4 +22,7 @@ public class LoginDTO {
 
     @NotNull(message = "密码不能为空")
     private String password;
+
+    @NotNull(message = "图形验证码不能为空")
+    private String verifyCode;
 }

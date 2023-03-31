@@ -34,4 +34,6 @@ public interface CoreConstant {
 
     String V1="v1";
 
+    String VERIFY_CODE="VERIFY_CODE";
+
 }

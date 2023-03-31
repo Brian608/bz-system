@@ -3,6 +3,8 @@ package com.feather.bz.manage.api;
 
 import com.feather.bz.common.constants.CoreConstant;
 import com.feather.bz.common.core.JsonResult;
+import com.feather.bz.common.utils.CaptchaGenerator;
+import com.feather.bz.common.utils.RandomUtil;
 import com.feather.bz.manage.annoation.Log;
 import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.domain.bo.AddUserBO;
@@ -16,8 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -41,6 +47,21 @@ public class SysUserController {
     @PostMapping("/registerUser")
     public JsonResult<Boolean> registerUser(@RequestBody  @Validated  AddUserBO addUserBO) {
         return JsonResult.buildSuccess(sysUserService.registerUser(addUserBO));
+    }
+
+    @ApiOperation(value = "图形验证码",httpMethod = "GET", produces = "application/json")
+    @GetMapping("/generateCaptcha")
+    public void generateCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 生成随机验证码文本
+        String captchaText = RandomUtil.genRandomNumberStr(6);
+
+        // 使用 CaptchaGenerator 生成验证码图片
+        BufferedImage captchaImage = CaptchaGenerator.generateCaptchaImage(captchaText);
+        HttpSession session=request.getSession(true);
+        session.setAttribute(CoreConstant.VERIFY_CODE,captchaText);
+        // 将验证码图片写入响应
+        response.setContentType("image/png");
+        ImageIO.write(captchaImage, "png", response.getOutputStream());
     }
 
 
