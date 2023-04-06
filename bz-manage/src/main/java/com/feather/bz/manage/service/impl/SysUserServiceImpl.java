@@ -14,6 +14,7 @@ import com.feather.bz.common.utils.*;
 import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.domain.bo.AddUserBO;
 import com.feather.bz.manage.domain.dto.LoginDTO;
+import com.feather.bz.manage.domain.vo.UserVO;
 import com.feather.bz.manage.mapper.SysUserMapper;
 import com.feather.bz.manage.service.ISysUserService;
 import lombok.RequiredArgsConstructor;
@@ -118,5 +119,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         StpUtil.logoutByTokenValue(StpUtil.getTokenValue());
         CookieUtils.deleteCookie(request ,response,"user");
         return true;
+    }
+
+    @Override
+    public List<UserVO> exportUser() {
+        List<SysUser> sysUserList = this.getBaseMapper().selectList(null);
+        return CollectionUtils.isEmpty(sysUserList)?Collections.emptyList(): com.feather.bz.common.utils.CollectionUtils.copy(sysUserList,UserVO.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.feather.bz.manage.api;
 
 
+import com.alibaba.excel.EasyExcel;
 import com.feather.bz.common.constants.CoreConstant;
 import com.feather.bz.common.core.JsonResult;
 import com.feather.bz.common.utils.CaptchaGenerator;
@@ -9,6 +10,7 @@ import com.feather.bz.manage.annoation.Log;
 import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.domain.bo.AddUserBO;
 import com.feather.bz.manage.domain.dto.LoginDTO;
+import com.feather.bz.manage.domain.vo.UserVO;
 import com.feather.bz.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,6 +83,20 @@ public class SysUserController {
     @PostMapping("/logOut")
     public JsonResult<Boolean> logOut(@ApiParam(name = "userName",value = "用户名",required = true) @RequestParam String userName, HttpServletRequest request, HttpServletResponse response) {
         return JsonResult.buildSuccess(sysUserService.logOut(userName,request,response));
+    }
+
+    @ApiOperation("用户导出")
+    @PostMapping("/export")
+    public JsonResult<String> export(HttpServletResponse response) throws IOException {
+        List<UserVO> userVOList = this.sysUserService.exportUser();
+        String fileName = URLEncoder.encode("用户信息", String.valueOf(StandardCharsets.UTF_8));
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), UserVO.class)
+                .sheet("用户信息")
+               // .excludeColumnFiledNames();
+                .doWrite(userVOList);
+        return JsonResult.buildSuccess();
+
     }
 
 }
