@@ -1,11 +1,12 @@
 package com.feather.bz.common.web;
 
 import com.feather.bz.common.constants.CoreConstant;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 /**
  * @projectName: bz-system
  * @package: com.feather.bz.common.web
@@ -17,9 +18,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
+
+    @Value("${images.path:}")
+    private String imagePath;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        String[] allow = {"/api/v1/sys-user/login","/api/v1/sys-user/generateCaptcha","/api/v1/file-preview/preview/","/swagger-ui/","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"};
+        String[] allow = {"/api/v1/sys-user/login","/api/v1/sys-user/registerUser","/api/v1/sys-user/generateCaptcha","/api/v1/file-preview/preview/","/swagger-ui/","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"};
         registry.addInterceptor( authorityInterceptor())
                 .addPathPatterns("/"+ CoreConstant.API+"/"+CoreConstant.V1+"/**")
                 .excludePathPatterns(allow);
@@ -30,6 +34,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Bean
     public AuthenticateInterceptor authorityInterceptor() {
         return new AuthenticateInterceptor();
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations(imagePath);
     }
 
 

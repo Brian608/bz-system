@@ -50,7 +50,7 @@ public class SysUserController {
    // @Log(description = "注册用户")
     @ApiOperation(value = "注册用户",httpMethod = "POST", produces = "application/json")
     @PostMapping("/registerUser")
-    public JsonResult<Boolean> registerUser(@RequestBody  @Validated  AddUserBO addUserBO) {
+    public JsonResult<Boolean> registerUser(@RequestBody  @Validated  AddUserBO addUserBO) throws IOException {
         return JsonResult.buildSuccess(sysUserService.registerUser(addUserBO));
     }
 

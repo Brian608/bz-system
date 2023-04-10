@@ -73,6 +73,10 @@ public class AddUserBO {
     @NotNull(message = "性别不能为空")
     private Integer sex;
 
+    @ApiModelProperty(value = "头像base64",name ="avatar",required = true)
+    @NotNull(message = "头像不能为空")
+    private String avatar;
+
     /**
      * 生日 生日
      */

@@ -18,3 +18,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   file-path: D:\\dev\\logs\\bz\\bz
+images:
+  dir: D:\\dev\\files\\images\\bz\\avatar
+  path: file:///D:/dev/files/images/bz/avatar/

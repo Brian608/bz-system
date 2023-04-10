@@ -8,6 +8,7 @@ import com.feather.bz.manage.domain.vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param addUserBO
      * @return
      */
-    Boolean registerUser(AddUserBO addUserBO );
+    Boolean registerUser(AddUserBO addUserBO ) throws IOException;
 
     /**
      * 登录

@@ -21,11 +21,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -45,14 +47,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private  final RedisService redisService;
 
+    @Value("${images.dir:}")
+    private String imageDir;
+
     @Override
-    public Boolean registerUser(AddUserBO addUserBO ) {
+    public Boolean registerUser(AddUserBO addUserBO ) throws IOException {
         ParamCheckUtil.checkObjectNonNull(addUserBO);
         this.checkUserExist(addUserBO);
         SysUser sysUser=new SysUser();
         String salt = RandomUtil.genRandomNumberStr(8);
         sysUser.setSalt(salt);
         BeanUtils.copyProperties(addUserBO,sysUser);
+        String avatar = ImageUtils.saveBase64ImageToFile(addUserBO.getAvatar(),imageDir);
+        sysUser.setAvatar(avatar);
         if (Objects.isNull(addUserBO.getBirthday())){
             sysUser.setBirthday(new Date());
         }

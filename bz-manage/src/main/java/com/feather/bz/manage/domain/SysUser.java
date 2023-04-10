@@ -62,6 +62,8 @@ public class SysUser extends Model<SysUser> {
      */
     private String email;
 
+    private String avatar;
+
     /**
      * 性别 性别 1:男  0:女  2:保密
      */

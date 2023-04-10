@@ -11,6 +11,7 @@
         <result column="realname" property="realname" />
         <result column="mobile" property="mobile" />
         <result column="email" property="email" />
+        <result column="avatar" property="avatar"/>
         <result column="sex" property="sex" />
         <result column="birthday" property="birthday" />
         <result column="created_time" property="createdTime" />
