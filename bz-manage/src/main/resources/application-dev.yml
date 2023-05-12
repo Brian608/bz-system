@@ -21,3 +21,5 @@ logging:
 images:
   dir: D:\\dev\\files\\images\\bz\\avatar
   path: file:///D:/dev/files/images/bz/avatar/
+swagger:
+  enabled: true

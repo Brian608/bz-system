@@ -34,6 +34,9 @@ public class SwaggerConfig {
     @Value("${server.port:}")
     private String port;
 
+    @Value("${swagger.enabled}")
+    private boolean swaggerEnabled;
+
 //    @Bean
 //    public Docket createRestApi() {
 //        log.info("接口地址:"+"http://localhost:"+port+"/swagger-ui/");
@@ -49,6 +52,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         log.info("接口地址:"+"http://localhost:"+port+"/swagger-ui/");
         return new Docket(DocumentationType.OAS_30)
+                .enable(swaggerEnabled)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
