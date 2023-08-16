@@ -51,6 +51,7 @@ public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
         log.info("接口地址:"+"http://localhost:"+port+"/swagger-ui/");
+        log.info("接口地址:"+"http://localhost:"+port+"/doc.html");
         return new Docket(DocumentationType.OAS_30)
                 .enable(swaggerEnabled)
                 .apiInfo(apiInfo())

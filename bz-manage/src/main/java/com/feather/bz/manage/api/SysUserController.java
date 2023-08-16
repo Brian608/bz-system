@@ -7,7 +7,6 @@ import com.feather.bz.common.core.JsonResult;
 import com.feather.bz.common.utils.CaptchaGenerator;
 import com.feather.bz.common.utils.RandomUtil;
 import com.feather.bz.manage.annoation.Log;
-import com.feather.bz.manage.domain.SysUser;
 import com.feather.bz.manage.domain.bo.AddUserBO;
 import com.feather.bz.manage.domain.dto.LoginDTO;
 import com.feather.bz.manage.domain.vo.UserVO;
