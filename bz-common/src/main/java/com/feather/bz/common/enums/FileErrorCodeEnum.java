@@ -1,6 +1,8 @@
 package com.feather.bz.common.enums;
 
 import com.feather.bz.common.exception.BaseErrorCodeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @projectName: bz-system
@@ -11,34 +13,14 @@ import com.feather.bz.common.exception.BaseErrorCodeEnum;
  * @since: 2023-03-03 17:50
  * @version: 1.0
  */
+@Getter
+@AllArgsConstructor
 public enum FileErrorCodeEnum  implements BaseErrorCodeEnum {
     FILE_IS_NOT_EXIST("400001", "文件不存在")
     ;
-    private String errorCode;
+    private final String errorCode;
 
-    private String errorMsg;
+    private final String errorMsg;
 
-    FileErrorCodeEnum(String errorCode, String errorMsg) {
-        this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
-    }
-
-    @Override
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    @Override
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
 
 }

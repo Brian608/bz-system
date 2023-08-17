@@ -1,6 +1,8 @@
 package com.feather.bz.common.enums;
 
 import com.feather.bz.common.exception.BaseErrorCodeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @projectName: bz-system
@@ -11,6 +13,8 @@ import com.feather.bz.common.exception.BaseErrorCodeEnum;
  * @since: 2022-11-30 21:22
  * @version: 1.0
  */
+@Getter
+@AllArgsConstructor
 public enum UserErrorCodeEnum  implements BaseErrorCodeEnum {
     USER_COUPON_IS_NULL("300001", "密码跟确认密码不一致"),
 
@@ -29,30 +33,8 @@ public enum UserErrorCodeEnum  implements BaseErrorCodeEnum {
     VERIFY_CODE_ERROR("300007","图形验证码错误或过期"),
 
     ;
-    private String errorCode;
+    private final String errorCode;
 
-    private String errorMsg;
+    private final String errorMsg;
 
-    UserErrorCodeEnum(String errorCode, String errorMsg) {
-        this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
-    }
-
-    @Override
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    @Override
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
 }

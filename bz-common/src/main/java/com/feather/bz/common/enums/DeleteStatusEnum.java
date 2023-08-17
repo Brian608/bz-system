@@ -1,7 +1,14 @@
 package com.feather.bz.common.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @projectName: bz-system
@@ -12,41 +19,39 @@ import java.util.Map;
  * @since: 2022-11-26 21:09
  * @version: 1.0
  */
+@Getter
+@AllArgsConstructor
 public enum DeleteStatusEnum {
     NO(0, "未删除"),
     YES(1, "已删除");
 
-    private Integer code;
+    private final Integer code;
 
-    private String msg;
+    private final  String msg;
 
-    DeleteStatusEnum(Integer code, String msg) {
-        this.code = code;
-        this.msg = msg;
+
+//    public static Map<Integer, String> toMap(){
+//        Map<Integer, String> map = new HashMap<>(16);
+//        for (DeleteStatusEnum element : DeleteStatusEnum.values() ){
+//            map.put(element.getCode(),element.getMsg());
+//        }
+//        return map;
+//    }
+
+    public static Map<Integer, String> toMap() {
+        return Arrays.stream(DeleteStatusEnum.values())
+                .collect(Collectors.toMap(DeleteStatusEnum::getCode, DeleteStatusEnum::getMsg));
     }
 
-    public Integer getCode() {
-        return code;
-    }
+    public static DeleteStatusEnum of(String code) {
 
-    public String getMsg() {
-        return msg;
-    }
+        Objects.requireNonNull(code);
 
-    public static Map<Integer, String> toMap(){
-        Map<Integer, String> map = new HashMap<>(16);
-        for (DeleteStatusEnum element : DeleteStatusEnum.values() ){
-            map.put(element.getCode(),element.getMsg());
-        }
-        return map;
-    }
-
-    public static DeleteStatusEnum getByCode(Integer code){
-        for(DeleteStatusEnum element : DeleteStatusEnum.values()){
-            if (code.equals(element.getCode())) {
-                return element;
-            }
-        }
-        return null;
+        return Stream.of(values())
+                .filter(bean -> bean.code.equals(code))
+                .findAny()
+                .orElseThrow(
+                        () -> new IllegalArgumentException(code + " not exists")
+                );
     }
 }
