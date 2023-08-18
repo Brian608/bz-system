@@ -45,4 +45,6 @@ public interface ISysUserService extends IService<SysUser> {
 
     List<UserVO> exportUser();
 
+    void encryptPhone();
+
 }

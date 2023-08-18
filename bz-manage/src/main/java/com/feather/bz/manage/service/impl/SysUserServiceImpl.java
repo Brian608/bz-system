@@ -22,13 +22,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * <p>
@@ -49,6 +53,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Value("${images.dir:}")
     private String imageDir;
+
+    private  final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Override
     public Boolean registerUser(AddUserBO addUserBO ) throws IOException {
@@ -133,4 +139,46 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<SysUser> sysUserList = this.getBaseMapper().selectList(null);
         return CollectionUtils.isEmpty(sysUserList)?Collections.emptyList(): com.feather.bz.common.utils.CollectionUtils.copy(sysUserList,UserVO.class);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Scheduled(cron = "0 * * * * *")
+    @Override
+    public void encryptPhone() {
+        List<String> unencryptedUserPhoneList = new ArrayList<>();
+        for (int i = 0; i <101 ; i++) {
+            unencryptedUserPhoneList.add(RandomUtil.genRandomNumberStr(6));
+        }
+        // 每批处理的大小
+        int batchSize = 100;
+        log.info("#unencryptedUserPhone size : [{}]",unencryptedUserPhoneList.size());
+        Runnable processTask = unencryptedUserPhoneList.size() > batchSize ?
+                () -> processInBatches(unencryptedUserPhoneList, batchSize) :
+                () -> processBatch(unencryptedUserPhoneList);
+
+        processTask.run();
+
+    }
+
+    private void processInBatches(List<String> unencryptedUserPhoneList, int batchSize) {
+        for (int i = 0; i < unencryptedUserPhoneList.size(); i += batchSize) {
+            int endIndex = Math.min(i + batchSize, unencryptedUserPhoneList.size());
+            List<String> batchList = unencryptedUserPhoneList.subList(i, endIndex);
+            executorService.execute(() -> processBatch(batchList));
+        }
+    }
+
+    private void processBatch(List<String> batchList) {
+        log.info("Thread [{}] is starting to process [{}] data.", Thread.currentThread().getName(), batchList.size());
+        batchList.forEach(p -> {
+            try {
+                MD5Utils.getMD5Str(p);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        log.info("Thread [{}] finished processing [{}] data.", Thread.currentThread().getName(),
+                batchList.size());
+
+    }
+
 }

@@ -3,6 +3,7 @@ package com.feather.bz.manage;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @projectName: bz-system
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since: 2022-11-25 22:55
  * @version: 1.0
  */
+@EnableScheduling
 @SpringBootApplication(scanBasePackages = {"com.feather.bz.*"})
 @MapperScan(basePackages = {" com.feather.bz.manage.mapper"})
 public class ManageApplication {
