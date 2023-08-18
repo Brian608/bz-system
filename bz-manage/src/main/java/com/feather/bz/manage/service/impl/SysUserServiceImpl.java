@@ -165,6 +165,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             List<String> batchList = unencryptedUserPhoneList.subList(i, endIndex);
             executorService.execute(() -> processBatch(batchList));
         }
+        executorService.shutdown();
     }
 
     private void processBatch(List<String> batchList) {
@@ -180,5 +181,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 batchList.size());
 
     }
-
 }

@@ -22,5 +22,11 @@
     <sql id="Base_Column_List">
         id, username, password, nickname, realname, face, mobile, email, sex, birthday, created_time, updated_time
     </sql>
+    <update id="updateUserBatch" parameterType="java.util.List">
+        <foreach collection="userList" item="item" separator=";">
+            UPDATE sys_user SET mobile = #{item.mobile} WHERE id = #{item.id}
+        </foreach>
+    </update>
+
 
 </mapper>

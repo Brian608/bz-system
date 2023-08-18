@@ -3,6 +3,9 @@ package com.feather.bz.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.feather.bz.manage.domain.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
+
+    void  updateUserBatch(@Param(("userList")) List<SysUser> userList);
 
 }
