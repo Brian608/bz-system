@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  */
 @Getter
 @AllArgsConstructor
-public enum DeleteStatusEnum {
+public enum DeleteStatusEnum  implements  BaseEnum{
     NO(0, "未删除"),
     YES(1, "已删除");
 
@@ -38,20 +38,20 @@ public enum DeleteStatusEnum {
 //        return map;
 //    }
 
-    public static Map<Integer, String> toMap() {
-        return Arrays.stream(DeleteStatusEnum.values())
-                .collect(Collectors.toMap(DeleteStatusEnum::getCode, DeleteStatusEnum::getMsg));
-    }
-
-    public static DeleteStatusEnum of(String code) {
-
-        Objects.requireNonNull(code);
-
-        return Stream.of(values())
-                .filter(bean -> bean.code.equals(code))
-                .findAny()
-                .orElseThrow(
-                        () -> new IllegalArgumentException(code + " not exists")
-                );
-    }
+//    public static Map<Integer, String> toMap() {
+//        return Arrays.stream(DeleteStatusEnum.values())
+//                .collect(Collectors.toMap(DeleteStatusEnum::getCode, DeleteStatusEnum::getMsg));
+//    }
+//
+//    public static DeleteStatusEnum of(String code) {
+//
+//        Objects.requireNonNull(code);
+//
+//        return Stream.of(values())
+//                .filter(bean -> bean.code.equals(code))
+//                .findAny()
+//                .orElseThrow(
+//                        () -> new IllegalArgumentException(code + " not exists")
+//                );
+//    }
 }
