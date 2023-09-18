@@ -23,9 +23,11 @@
         id, username, password, nickname, realname, face, mobile, email, sex, birthday, created_time, updated_time
     </sql>
     <update id="updateUserBatch" parameterType="java.util.List">
+        <![CDATA[
         <foreach collection="userList" item="item" separator=";">
             UPDATE sys_user SET mobile = #{item.mobile} WHERE id = #{item.id}
         </foreach>
+        ]]>
     </update>
 
 

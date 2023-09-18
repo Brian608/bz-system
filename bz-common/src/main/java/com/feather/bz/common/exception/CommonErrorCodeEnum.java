@@ -1,5 +1,8 @@
 package com.feather.bz.common.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @projectName: bz-system
  * @package: com.feather.bz.common.exception
@@ -9,6 +12,8 @@ package com.feather.bz.common.exception;
  * @since: 2022-11-26 20:54
  * @version: 1.0
  */
+@AllArgsConstructor
+@Getter
 public enum CommonErrorCodeEnum  implements BaseErrorCodeEnum{
     // =========== 系统级别未知异常 =========
 
@@ -78,26 +83,26 @@ public enum CommonErrorCodeEnum  implements BaseErrorCodeEnum{
 
     private String errorMsg;
 
-    CommonErrorCodeEnum(String errorCode, String errorMsg) {
-        this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
-    }
-
-    @Override
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    @Override
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
+//    CommonErrorCodeEnum(String errorCode, String errorMsg) {
+//        this.errorCode = errorCode;
+//        this.errorMsg = errorMsg;
+//    }
+//
+//    @Override
+//    public String getErrorCode() {
+//        return errorCode;
+//    }
+//
+//    public void setErrorCode(String errorCode) {
+//        this.errorCode = errorCode;
+//    }
+//
+//    @Override
+//    public String getErrorMsg() {
+//        return errorMsg;
+//    }
+//
+//    public void setErrorMsg(String errorMsg) {
+//        this.errorMsg = errorMsg;
+//    }
 }
