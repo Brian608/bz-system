@@ -1,6 +1,9 @@
 package com.feather.bz.common.redis;
-
+import org.redisson.Redisson;
+import org.redisson.client.codec.StringCodec;
+import org.redisson.config.Config;
 import lombok.Data;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
