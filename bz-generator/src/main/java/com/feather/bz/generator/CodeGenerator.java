@@ -102,6 +102,6 @@ public class CodeGenerator {
     }
 
     public static void main(String[] args) {
-        generator("sys_user");
+        generator("sys_member");
     }
 }
