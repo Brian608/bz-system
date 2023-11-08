@@ -1,5 +1,7 @@
 package com.feather.bz.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @projectName: bz-system
  * @package: com.feather.bz.common.utils
@@ -16,7 +18,7 @@ public class DataMaskingUtil {
      * @return
      */
     public static String maskPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.isEmpty()) {
+        if (StringUtils.isBlank(phoneNumber)) {
             return phoneNumber;
         }
 
@@ -35,7 +37,7 @@ public class DataMaskingUtil {
      * @return
      */
     public static String maskIdCardNumber(String idCardNumber) {
-        if (idCardNumber == null || idCardNumber.isEmpty()) {
+        if (StringUtils.isBlank(idCardNumber)) {
             return idCardNumber;
         }
 
@@ -51,7 +53,7 @@ public class DataMaskingUtil {
     }
 
     public static String maskString(String input) {
-        if (input == null || input.isEmpty()) {
+        if (StringUtils.isBlank(input)) {
             return input;
         }
 
