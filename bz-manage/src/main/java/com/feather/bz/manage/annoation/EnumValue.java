@@ -1,5 +1,6 @@
 package com.feather.bz.manage.annoation;
 
+import com.feather.bz.common.enums.BaseEnum;
 import com.feather.bz.manage.handler.EnumValueValidator;
 
 import javax.validation.Constraint;
@@ -23,6 +24,9 @@ public @interface EnumValue {
     String[] strValues() default {};
 
     int[] intValues() default {};
+
+    // Include enumClass in the annotation
+    Class<? extends BaseEnum> enumClass() default BaseEnum.class;
 
     // 分组
     Class<?>[] groups() default {};

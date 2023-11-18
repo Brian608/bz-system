@@ -1,9 +1,11 @@
 package com.feather.bz.manage.handler;
 
+import com.feather.bz.common.enums.BaseEnum;
 import com.feather.bz.manage.annoation.EnumValue;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Arrays;
 
 /**
  * @projectName: bz-system
@@ -19,10 +21,13 @@ public class EnumValueValidator  implements ConstraintValidator<EnumValue, Objec
     private String[] strValues;
     private int[] intValues;
 
+    private Class<? extends BaseEnum> enumClass;
+
     @Override
     public void initialize(EnumValue constraintAnnotation) {
         strValues = constraintAnnotation.strValues();
         intValues = constraintAnnotation.intValues();
+        enumClass = constraintAnnotation.enumClass();
     }
 
     @Override
@@ -39,6 +44,11 @@ public class EnumValueValidator  implements ConstraintValidator<EnumValue, Objec
                     return true;
                 }
             }
+            // Check  enum codes
+        }else if (enumClass != null){
+            // 使用 enumClass 获取 code 并进行比较
+            Integer code = ((BaseEnum) value).getCode();
+            return Arrays.stream(intValues).anyMatch(c -> c == code);
         }
         return false;
     }

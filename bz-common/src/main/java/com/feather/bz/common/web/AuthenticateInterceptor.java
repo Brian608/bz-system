@@ -46,8 +46,8 @@ public class AuthenticateInterceptor implements HandlerInterceptor {
 //            response.setContentType("application/json;charset=UTF-8");
 //            response.getWriter().write("{\"code\": 401, \"msg\": \"未登录，请先登录\"}");
         }
-       // String token = authToken.substring("Bearer".length() + 1).trim();
-      //  UserTokenDTO userTokenDTO = JWTUtil.verifyToken(authToken);
+        // String token = authToken.substring("Bearer".length() + 1).trim();
+        //  UserTokenDTO userTokenDTO = JWTUtil.verifyToken(authToken);
         //1.判断请求是否有效
 //        if (redisService.get(RedisConstants.USER+userTokenDTO.getUsername()) == null
 //                || !redisService.get(RedisConstants.USER+userTokenDTO.getUsername()).equals(authToken)) {
@@ -61,10 +61,10 @@ public class AuthenticateInterceptor implements HandlerInterceptor {
 //        }
     }
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
-       // log.info("posthaste执行了");
+        // log.info("posthaste执行了");
     }
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
-       // log.info("after handle执行了");
+        // log.info("after handle执行了");
     }
 
 }
