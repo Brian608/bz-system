@@ -1,6 +1,8 @@
 package com.feather.bz.manage.domain.bo;
 
 import com.feather.bz.manage.annoation.EnumValue;
+import com.feather.bz.manage.annoation.InEnum;
+import com.feather.bz.manage.domain.enums.SexEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -68,7 +70,8 @@ public class AddUserBO {
     /**
      * 性别 性别 1:男  0:女  2:保密
      */
-    @EnumValue(intValues = {0,1,2}, message = "性别值只能为0或1或2")
+    //@EnumValue(intValues = {0,1,2}, message = "性别值只能为0或1或2")
+    @InEnum(value = SexEnum.class,message = "性别值只能在{value}范围内")
     @ApiModelProperty(value = "性别",name ="sex",example = "2",required = true)
     @NotNull(message = "性别不能为空")
     private Integer sex;
