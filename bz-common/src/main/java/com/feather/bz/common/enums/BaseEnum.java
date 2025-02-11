@@ -1,9 +1,8 @@
 package com.feather.bz.common.enums;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.Objects;
+import com.feather.bz.common.domain.dto.EnumDT0;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -57,5 +56,11 @@ public interface BaseEnum {
     static <E extends Enum<E> & BaseEnum> Map<Integer, String> toMap(Class<E> enumClass) {
         return Arrays.stream(enumClass.getEnumConstants())
                 .collect(Collectors.toMap(BaseEnum::getCode, BaseEnum::getMsg));
+    }
+
+    static <E extends Enum<E> & BaseEnum> List<EnumDT0> toList(Class<E> enumClass) {
+        return Arrays.stream(enumClass.getEnumConstants())
+                .map(enumConstant -> new EnumDT0(enumConstant.getCode(), enumConstant.getMsg()))
+                .collect(Collectors.toList());
     }
 }
